@@ -1,0 +1,31 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+
+{% block css %}
+    
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h1 class="display-1">Welcome</h1>
+                <p class="lead">Fill this form</p>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    
+{% endblock %}
+    
