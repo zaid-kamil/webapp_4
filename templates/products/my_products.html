@@ -1,0 +1,68 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-5">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1>Products</h1>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="{% url 'add_product' %}" class="btn btn-primary float-end">Add Product</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 mt-5">
+            <div class="container-fluid">
+                <div class="row">
+                    {% for item in products.qs %}
+                    <div class="col-md-4 mb-5">
+                        <div class="card">
+                            <img src="{{item.image.url}}" alt="" class="card-img">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    {{item.name}}
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="{% url 'view_product' item.id %}">View</a>
+                                {% if user == item.user %}
+                                <a href="{% url 'edit_product' item.id %}">Edit</a>
+                                <a href="{% url 'delete_product' item.id %}">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="alert alert-warning">
+                        No products found <a href="{% url 'add_product' %}">Create</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mt-5">
+            <form>
+                {% bootstrap_form products.form %}
+                <button>filter</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block css %}
+<style>
+    .card-img {
+        aspect-ratio: 1.2/1 !important;
+    }
+</style>
+{% endblock css %}
